@@ -1,4 +1,4 @@
-# json-kafka 
+# Metamorphosis 
 Converts JSON to avro format
 
 ## Usage
