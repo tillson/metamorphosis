@@ -1,0 +1,7 @@
+KafkaBrokers:
+    - "localhost:9092"
+KafkaSASLUsername: "" 
+KafkaSASLPassword: ""
+KafkaTopic: "rickybobby"
+KafkaMessageKey: ""
+AvroSchemaVersion: 5
