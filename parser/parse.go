@@ -2,6 +2,7 @@ package parser
 
 import (
 	"bufio"
+	"bytes"
 	"encoding/json"
 	"log"
 	"os"
@@ -21,12 +22,32 @@ func ParseFile(file string, c *cli.Context) {
 		}
 		s = bufio.NewScanner(f)
 	}
-	for s.Scan() {
-		var schema DnsSchema
-		if err := json.Unmarshal(s.Bytes(), &schema); err != nil {
-			log.Fatal(err)
+
+	if c.String("input") == "json" {
+		for s.Scan() {
+			var schema DnsSchema
+			if err := json.Unmarshal(s.Bytes(), &schema); err != nil {
+				log.Fatal(err)
+			}
+			schema.ToAvro(c)
 		}
-		schema.ToAvro(c)
+	} else if c.String("input") == "avro" {
+		s.Split(func(data []byte, atEOF bool) (advance int, token []byte, err error) {
+			if atEOF && len(data) == 0 {
+				return 0, nil, nil
+			}
+			if i := bytes.Index(data, []byte{0xC3, 0x01}); i >= 0 {
+				return i + 1, data[0:i], nil
+			}
+			if atEOF {
+				return len(data), data, nil
+			}
+			return
+		})
+		for s.Scan() {
+			KafkaChannel <- s.Bytes()
+		}
+
 	}
 	if s.Err() != nil {
 		log.Fatal(s.Err())

@@ -14,8 +14,9 @@ import (
 
 func main() {
 	app := cli.NewApp()
-	app.Name = "json-kafka"
+	app.Name = "metamorphosis"
 	app.Description = "Convert JSON to avro and send it to Kafka"
+	app.Usage = "cat dns.json | metamorphosis"
 	app.Version = "1.0.0"
 	app.Compiled = time.Now()
 
@@ -35,6 +36,11 @@ func main() {
 	}
 
 	app.Flags = []cli.Flag{
+		&cli.StringFlag{
+			Name:  "input",
+			Usage: "Input type (json, avro)",
+			Value: "json",
+		},
 		&cli.StringFlag{
 			Name:  "output",
 			Usage: "Output type (stdout (default), file, kafka)",
@@ -93,6 +99,7 @@ func setupAvro(c *cli.Context) {
 
 		producer.Producer = producer.NewProducer()
 		parser.AvroSchema = avro.MustParse(parser.GetAvroSchema())
+
 	} else {
 		var (
 			encoder *ocf.Encoder
