@@ -8,7 +8,7 @@ import (
 	"os"
 
 	"github.com/hamba/avro"
-	"gopkg.in/urfave/cli.v2"
+	"github.com/urfave/cli/v2"
 )
 
 func ParseFile(file string, c *cli.Context) {

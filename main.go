@@ -9,7 +9,7 @@ import (
 
 	"github.com/hamba/avro"
 	"github.com/hamba/avro/ocf"
-	"gopkg.in/urfave/cli.v2"
+	"github.com/urfave/cli/v2"
 )
 
 func main() {
