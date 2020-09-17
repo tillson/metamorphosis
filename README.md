@@ -1,10 +1,10 @@
 # Metamorphosis 
-Converts JSON to avro format
+Transforms JSON to avro format and feeds to a kafka consumer. Options are specified by command-line arguments. 
 
 ## Usage
 ```
 NAME:
-   metamorphosis - json->avro->kafka translator
+   metamorphosis - json->avro->kafka transformer
 
 USAGE:
    metamorphosis [global options] command [command options] [arguments...]
@@ -34,3 +34,8 @@ GLOBAL OPTIONS:
    --help, -h              show help (default: false)
    --version, -v           print the version (default: false)
 ```
+
+### Examples
+`cat data.json | metamorphosis - `  
+`metamorphosis --output file --output-file out.avro data.json`  
+`metamorphosis --output kafka --brokers localhost:9092 --topic active-data data.avro data.json`

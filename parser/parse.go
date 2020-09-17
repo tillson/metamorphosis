@@ -22,7 +22,6 @@ func ParseFile(file string, c *cli.Context) {
 		}
 		s = bufio.NewScanner(f)
 	}
-
 	if c.String("input") == "json" {
 		for s.Scan() {
 			var schema DnsSchema

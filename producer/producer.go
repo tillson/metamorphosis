@@ -47,7 +47,7 @@ func NewProducer() sarama.AsyncProducer {
 	parser.KafkaChannel = make(chan []byte, 10)
 	var schemaIdentifier uint32 = uint32(SchemaVersion)
 	var schemaIdentifierBuffer []byte = make([]byte, 4)
-	var confluentAvroHeader []byte = make([]byte, 5)
+	var confluentAvroHeader []byte
 	binary.BigEndian.PutUint32(schemaIdentifierBuffer, schemaIdentifier)
 	confluentAvroHeader = append([]byte{0}, schemaIdentifierBuffer...)
 	go func() {

@@ -110,7 +110,10 @@ func setupAvro(c *cli.Context) {
 			if err != nil {
 				log.Fatal(err)
 			}
-		} else {
+		} else if c.String("output") == "file" {
+			if c.String("output-file") == "" {
+				log.Fatal("output-file is required with --output file.")
+			}
 			f, err := os.Create(c.String("output-file"))
 			if err != nil {
 				log.Fatal(err)
